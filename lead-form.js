@@ -2,31 +2,28 @@
    EV China Indonesia — 留资表单（独立维护文件）
    ------------------------------------------------------------
    一张干净的品牌表单，客户可【自行选择是否上传照片/视频】，无需登录。
-   提交后线索 + 照片一起进你的 Forminit 后台（可同步邮箱/Google 表格）。
-   —— 不再需要两张 Google 表单，也不用 VLOOKUP 配对。
+   提交后线索 + 照片进你的 Forminit 后台。
+   ------------------------------------------------------------
+   提交方式：表单【原生 POST + 隐藏 iframe】，不走 AJAX —— 避免跨域(CORS)被拦。
+   提交成功后由 iframe 加载完成触发，跳转到“谢谢”页。
    ============================================================
-   ★ 你只需做一件事：去 Forminit 建一个表单，拿到「提交地址(endpoint)」，
-     填到下面 FORM_CONFIG.endpoint。详见《表单设置说明.md》。
+   ★ 换表单只需改 FORM_CONFIG.endpoint（Forminit 的提交地址）。
    ============================================================ */
 
 const FORM_CONFIG = {
-  // Forminit（原 Getform）的表单提交地址，形如 https://forminit.com/f/xxxxxxxx
-  endpoint: "https://forminit.com/f/5auc8ubx42f",   // 你的 Forminit 提交地址（已填好）
+  endpoint: "https://forminit.com/f/5auc8ubx42f",   // 你的 Forminit 提交地址
   successRedirect: "terima-kasih.html",
-  fallbackToWhatsApp: true,     // endpoint 没填时，临时回退到 WhatsApp（无法带照片）
-  maxFileMB: 25                 // 单文件大小上限提示（Forminit 免费版 25MB）
+  maxFileMB: 25                                       // 单文件上限提示（Forminit 免费版 25MB）
 };
 
 /* ============================================================
    以下逻辑一般无需改动
    ============================================================ */
-function isFormConfigured(){
-  return !!FORM_CONFIG.endpoint && FORM_CONFIG.endpoint.indexOf("http") === 0;
-}
-
 function leadFormHTML(){
   return `
-  <form class="form-card" id="leadForm" novalidate>
+  <form class="form-card" id="leadForm"
+        action="${FORM_CONFIG.endpoint}" method="POST"
+        enctype="multipart/form-data" target="evchina_hidden_iframe">
     <h3 style="margin-bottom:6px" data-zh="留下信息，我们主动联系你">Tinggalkan Data, Kami yang Menghubungi Anda</h3>
     <p class="note" style="margin-bottom:18px" data-zh="只需 30 秒。照片可传可不传——传了诊断更准。">Cukup 30 detik. Foto opsional — kalau ada, diagnosa lebih akurat.</p>
     <div class="form-row">
@@ -55,8 +52,9 @@ function leadFormHTML(){
       <p class="note" style="margin-top:6px" data-zh="选填。文件太大（>25MB）建议改用 WhatsApp 发。">Opsional. File besar (>25MB) lebih baik dikirim via WhatsApp.</p>
     </div>
     <button type="submit" class="btn btn-wa" data-zh="提交">Kirim Sekarang</button>
-    <p class="note" id="formMsg" style="text-align:center;margin-top:12px" data-zh="提交后我们会尽快用 WhatsApp 联系你。">Setelah dikirim, kami akan segera menghubungi via WhatsApp.</p>
+    <p class="note" style="text-align:center;margin-top:12px" data-zh="提交后我们会尽快用 WhatsApp 联系你。">Setelah dikirim, kami akan segera menghubungi via WhatsApp.</p>
   </form>
+  <iframe name="evchina_hidden_iframe" id="evchina_hidden_iframe" style="display:none" title="submit"></iframe>
   `;
 }
 
@@ -70,57 +68,30 @@ function initLeadForm(){
   if(!form) return;
   const btn = form.querySelector('button[type="submit"]');
   const btnOrig = btn ? btn.textContent : "";
+  const iframe = document.getElementById("evchina_hidden_iframe");
+  let submitted = false;
 
-  form.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    if(!form.checkValidity()){ form.reportValidity(); return; }
-
-    // 未配置 Forminit → 回退 WhatsApp（无法带照片）
-    if(!isFormConfigured()){
-      if(!FORM_CONFIG.fallbackToWhatsApp){ alert("表单未配置，请见《表单设置说明.md》。"); return; }
-      const g = (n)=> (form.querySelector(`[name="${n}"]`)?.value || "").trim();
-      const text = "Halo EV China, saya ingin minta bantuan:\n"+
-        "Nama: "+g("nama")+"\nWhatsApp: "+g("whatsapp")+"\nKota: "+g("kota")+
-        "\nMobil: "+g("mobil")+"\nMasalah: "+g("masalah");
-      const num = window.EV_WA_NUMBER || "62XXXXXXXXXX";
-      window.open(`https://wa.me/${num}?text=${encodeURIComponent(text)}`, "_blank");
-      window.location.href = FORM_CONFIG.successRedirect;
-      return;
-    }
-
-    // 组装数据
-    const data = new FormData(form);
-
-    // 文件过大保护：>25MB 的照片/视频不随表单上传（Forminit 免费版上限），
-    // 文字信息照常进 Forminit，提示客户用 WhatsApp 发媒体。避免卡死/上传失败。
+  form.addEventListener("submit", ()=>{
+    // 文件过大保护：>25MB 的照片/视频清掉不上传（Forminit 免费版上限），文字照常提交
     const fileInput = form.querySelector('input[type="file"]');
     if(fileInput && fileInput.files && fileInput.files.length){
       let total = 0;
       for(let i=0;i<fileInput.files.length;i++){ total += fileInput.files[i].size; }
-      if(total > 24 * 1024 * 1024){
-        data.delete(fileInput.name);
-        alert("Foto/video terlalu besar (lebih dari 25MB), jadi tidak ikut terkirim. Data Anda tetap kami terima — mohon kirim foto/video-nya via WhatsApp ya. 🙏");
+      if(total > (FORM_CONFIG.maxFileMB) * 1024 * 1024){
+        fileInput.value = "";  // 清掉大文件，避免上传失败/卡死
+        alert("Foto/video terlalu besar (lebih dari " + FORM_CONFIG.maxFileMB + "MB), jadi tidak ikut terkirim. Data Anda tetap kami terima — mohon kirim foto/video-nya via WhatsApp ya. 🙏");
       }
     }
-
-    // 提交到 Forminit
+    submitted = true;
     if(btn){ btn.disabled = true; btn.textContent = "..."; }
-    try{
-      const res = await fetch(FORM_CONFIG.endpoint, {
-        method: "POST",
-        body: data,
-        headers: { "Accept": "application/json" }
-      });
-      if(res.ok){
-        window.location.href = FORM_CONFIG.successRedirect;
-      } else {
-        throw new Error("submit failed");
-      }
-    }catch(err){
-      if(btn){ btn.disabled = false; btn.textContent = btnOrig; }
-      alert("Maaf, pengiriman gagal. Silakan coba lagi, atau hubungi kami langsung lewat tombol WhatsApp. 🙏");
-    }
+    // 不 preventDefault：让表单原生 POST 到隐藏 iframe（绕过 CORS）
   });
+
+  if(iframe){
+    iframe.addEventListener("load", ()=>{
+      if(submitted){ window.location.href = FORM_CONFIG.successRedirect; }
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initLeadForm);
