@@ -88,12 +88,27 @@ function initLeadForm(){
       return;
     }
 
-    // 正式提交到 Forminit（含照片）
+    // 组装数据
+    const data = new FormData(form);
+
+    // 文件过大保护：>25MB 的照片/视频不随表单上传（Forminit 免费版上限），
+    // 文字信息照常进 Forminit，提示客户用 WhatsApp 发媒体。避免卡死/上传失败。
+    const fileInput = form.querySelector('input[type="file"]');
+    if(fileInput && fileInput.files && fileInput.files.length){
+      let total = 0;
+      for(let i=0;i<fileInput.files.length;i++){ total += fileInput.files[i].size; }
+      if(total > 24 * 1024 * 1024){
+        data.delete(fileInput.name);
+        alert("Foto/video terlalu besar (lebih dari 25MB), jadi tidak ikut terkirim. Data Anda tetap kami terima — mohon kirim foto/video-nya via WhatsApp ya. 🙏");
+      }
+    }
+
+    // 提交到 Forminit
     if(btn){ btn.disabled = true; btn.textContent = "..."; }
     try{
       const res = await fetch(FORM_CONFIG.endpoint, {
         method: "POST",
-        body: new FormData(form),
+        body: data,
         headers: { "Accept": "application/json" }
       });
       if(res.ok){
@@ -102,14 +117,8 @@ function initLeadForm(){
         throw new Error("submit failed");
       }
     }catch(err){
-      // 出错则回退 WhatsApp，避免丢线索
-      const g = (n)=> (form.querySelector(`[name="${n}"]`)?.value || "").trim();
-      const text = "Halo EV China, saya ingin minta bantuan:\n"+
-        "Nama: "+g("nama")+"\nWhatsApp: "+g("whatsapp")+"\nKota: "+g("kota")+
-        "\nMobil: "+g("mobil")+"\nMasalah: "+g("masalah");
-      const num = window.EV_WA_NUMBER || "62XXXXXXXXXX";
-      window.open(`https://wa.me/${num}?text=${encodeURIComponent(text)}`, "_blank");
       if(btn){ btn.disabled = false; btn.textContent = btnOrig; }
+      alert("Maaf, pengiriman gagal. Silakan coba lagi, atau hubungi kami langsung lewat tombol WhatsApp. 🙏");
     }
   });
 }
