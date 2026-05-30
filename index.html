@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servis EV China Indonesia — Diagnosa Mobil Listrik China dari Jarak Jauh</title>
+<meta name="description" content="Tidak bisa perbaiki mobil listrik China? Diagnosa jarak jauh oleh teknisi pabrik di China untuk BYD, Wuling, Chery, MG, Geely — tanpa alat OEM mahal. Melayani bengkel di seluruh Indonesia.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="dev-banner" data-zh="⚙️ 演示原型 · 点右上「中文预览」可切换中文校对 · 正式上线只显示印尼语">⚙️ Prototipe demo · Klik "中文预览" di kanan atas untuk pratinjau Mandarin · Versi live hanya Bahasa Indonesia</div>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img class="logo" src="icon.svg" alt="EV China Indonesia">
+      <span>EV China Indonesia<small data-zh="中国电动车 诊断·配件·培训">Diagnosa · Suku Cadang · Training</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-zh="首页">Beranda</a>
+      <a href="diagnosa.html" data-zh="远程诊断">Diagnosa</a>
+      <a href="suku-cadang.html" data-zh="配件">Suku Cadang</a>
+      <a href="training.html" data-zh="培训">Training</a>
+      <a href="harga.html" data-zh="价格">Harga</a>
+      <a href="tentang-kami.html" data-zh="关于我们">Tentang Kami</a>
+      <a href="kontak.html" data-zh="联系">Kontak</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="lang-toggle" id="langToggle">中文预览</button>
+      <a class="btn btn-wa js-wa" data-zh="联系客服">Chat WhatsApp</a>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="tag-id" style="margin-bottom:16px"><span data-zh="服务全印尼的修理厂">Untuk Bengkel di Seluruh Indonesia</span></span>
+        <h1 data-zh="修不了中国电动车？我们远程帮你修。">Tidak Bisa Perbaiki Mobil Listrik China? Kami Bantu dari Jarak Jauh.</h1>
+        <p class="lead" data-zh="由中国工厂工程师远程诊断 BYD、五菱、奇瑞、MG、吉利——不需要昂贵的 OEM 设备。只要一部手机和网络。">
+          Diagnosa jarak jauh oleh teknisi pabrik di China untuk BYD, Wuling, Chery, MG, Geely — tanpa alat OEM mahal. Cukup HP dan internet.</p>
+        <div class="hero-cta">
+          <a class="btn btn-wa btn-lg js-wa" data-zh="立即 WhatsApp 咨询">Chat via WhatsApp</a>
+          <a class="btn btn-ghost btn-lg" href="#form" data-zh="请求诊断">Minta Diagnosa</a>
+        </div>
+        <div class="hero-trust">
+          <div class="t"><b>50+</b><span data-zh="工厂工程师">Teknisi Pabrik</span></div>
+          <div class="t"><b>20+</b><span data-zh="支持品牌">Merek Didukung</span></div>
+          <div class="t"><b>🇮🇩</b><span data-zh="服务全印尼">Seluruh Indonesia</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="flow-card">
+          <div class="flow-title" data-zh="远程诊断流程">Cara Kerja Diagnosa Jarak Jauh</div>
+          <div style="position:relative">
+            <!-- vertical connector -->
+            <div style="position:absolute;left:20px;top:24px;bottom:24px;width:2px;background:rgba(255,255,255,.14)"></div>
+            <!-- step 1 -->
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:9px 0;position:relative">
+              <div style="flex:none;width:42px;height:42px;border-radius:12px;background:rgba(97,216,54,.22);display:grid;place-items:center;color:#BFF29B">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="10" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M9 18v2M15 18v2"/></svg>
+              </div>
+              <div><b style="color:#fff;font-size:14px;font-family:'Poppins',sans-serif;display:block" data-zh="接上 Smartlink C">Pasang Smartlink C</b><span style="color:#9FB4CA;font-size:12.5px" data-zh="插进车辆 OBD 口">Colok ke port OBD mobil</span></div>
+            </div>
+            <!-- step 2 -->
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:9px 0;position:relative">
+              <div style="flex:none;width:42px;height:42px;border-radius:12px;background:rgba(97,216,54,.22);display:grid;place-items:center;color:#BFF29B">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4"/><path d="M4 16a4 4 0 0 0 4 4h8a4 4 0 0 0 .9-7.9"/></svg>
+              </div>
+              <div><b style="color:#fff;font-size:14px;font-family:'Poppins',sans-serif;display:block" data-zh="数据加密传到中国">Data Terkirim Aman ke China</b><span style="color:#9FB4CA;font-size:12.5px" data-zh="经加密网关传输">Lewat gateway terenkripsi</span></div>
+            </div>
+            <!-- step 3 -->
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:9px 0;position:relative">
+              <div style="flex:none;width:42px;height:42px;border-radius:12px;background:rgba(97,216,54,.22);display:grid;place-items:center;color:#BFF29B">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/></svg>
+              </div>
+              <div><b style="color:#fff;font-size:14px;font-family:'Poppins',sans-serif;display:block" data-zh="工厂工程师诊断">Teknisi Pabrik Diagnosa</b><span style="color:#9FB4CA;font-size:12.5px" data-zh="用 OEM 设备读故障定位根因">Baca kode & akar masalah, alat OEM</span></div>
+            </div>
+            <!-- step 4 -->
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:9px 0;position:relative">
+              <div style="flex:none;width:42px;height:42px;border-radius:12px;background:rgba(37,211,102,.25);display:grid;place-items:center;color:#7FE6A4">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg>
+              </div>
+              <div><b style="color:#fff;font-size:14px;font-family:'Poppins',sans-serif;display:block" data-zh="WhatsApp 指导维修">Panduan Perbaikan via WhatsApp</b><span style="color:#9FB4CA;font-size:12.5px" data-zh="一步步带你修好">Langkah demi langkah sampai beres</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAIN POINTS ===== -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow light" data-zh="痛点">Masalah</span>
+      <h2 data-zh="印尼修理厂修中国电动车的难处">Kenapa Bengkel Sulit Perbaiki Mobil Listrik China?</h2>
+    </div>
+    <ul class="pain">
+      <li data-zh="没有 OEM 诊断设备 — BYD、奇瑞等原厂工具又贵又难买。">Tidak punya alat diagnosa OEM — tool resmi BYD, Chery, dll mahal dan sulit didapat.</li>
+      <li data-zh="没有接线图和维修手册 — 技术资料几乎拿不到。">Tidak ada wiring diagram atau manual servis — dokumentasi teknis hampir tidak tersedia.</li>
+      <li data-zh="资料是中文 — 故障码和说明看不懂。">Dokumen berbahasa Mandarin — kode kerusakan dan keterangan sulit dimengerti.</li>
+      <li data-zh="配件买错 — 装上去问题还在，浪费钱和时间。">Salah beli suku cadang — sudah dipasang tapi masalah tetap ada, buang waktu & uang.</li>
+    </ul>
+    <p class="center" style="margin-top:24px;font-weight:600;color:var(--ink)" data-zh="我们帮你一次诊断准确、一次买对配件。">Kami bantu Anda diagnosa dengan tepat dan dapatkan suku cadang yang benar sejak awal.</p>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow light" data-zh="流程">Cara Kerja</span>
+      <h2 data-zh="远程诊断怎么运作？">Bagaimana Cara Kerjanya?</h2>
+      <p data-zh="只要 4 步——你提供车，我们提供其余一切。">Hanya 4 langkah — Anda sediakan mobilnya, sisanya kami yang urus.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3 data-zh="连接车辆">Hubungkan Mobil</h3><p data-zh="把 Smartlink C 插进车的 OBD 口，无需特殊工具。">Pasang Smartlink C ke port OBD — tanpa alat khusus.</p></div>
+      <div class="step"><div class="num">2</div><h3 data-zh="数据加密上传">Data Terkirim Aman</h3><p data-zh="车辆数据经加密网关安全传输到中国。">Data mobil dikirim terenkripsi melalui gateway ke China.</p></div>
+      <div class="step"><div class="num">3</div><h3 data-zh="工程师诊断">Teknisi Diagnosa</h3><p data-zh="中国工厂工程师用 OEM 设备读故障、定位根因。">Teknisi pabrik membaca kode & menemukan akar masalah dengan alat OEM.</p></div>
+      <div class="step"><div class="num">4</div><h3 data-zh="指导维修">Panduan Perbaikan</h3><p data-zh="通过 WhatsApp 一步步指导你完成维修。">Panduan langkah demi langkah via WhatsApp sampai selesai.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BRANDS ===== -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head"><h2 data-zh="支持的中国电动车品牌">Merek Mobil Listrik China yang Kami Dukung</h2></div>
+    <div class="brands">
+      <span class="brand-pill star">BYD</span>
+      <span class="brand-pill">Wuling</span>
+      <span class="brand-pill">Chery</span>
+      <span class="brand-pill">Jaecoo</span>
+      <span class="brand-pill">Omoda</span>
+      <span class="brand-pill">MG</span>
+      <span class="brand-pill">Geely</span>
+      <span class="brand-pill">Neta</span>
+      <span class="brand-pill">AITO</span>
+      <span class="brand-pill">GAC Aion</span>
+      <span class="brand-pill">DFSK</span>
+      <span class="brand-pill" data-zh="及更多…">dan lainnya…</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT WE HELP ===== -->
+<section>
+  <div class="container">
+    <div class="section-head"><h2 data-zh="我们能帮你做什么">Apa yang Kami Bantu</h2></div>
+    <div class="grid grid-3">
+      <div class="card">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></span>
+        <h3 data-zh="精确故障诊断">Diagnosa Akurat</h3>
+        <p data-zh="不再瞎猜。工厂工程师用 OEM 设备定位确切故障。">Berhenti menebak. Teknisi pabrik menemukan masalah persis dengan alat OEM.</p>
+      </div>
+      <div class="card">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="4"/><path d="M11.5 11.5 20 20M16 16l2-2M13.5 13.5l2-2"/></svg></span>
+        <h3 data-zh="钥匙编程 / 模块配置">Program Kunci & Modul</h3>
+        <p data-zh="钥匙编程、模块配置、OTA 重置、事故解锁与上电。">Program kunci, konfigurasi modul, reset OTA, buka kunci & power-on setelah kecelakaan.</p>
+      </div>
+      <div class="card">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg></span>
+        <h3 data-zh="全程远程指导">Panduan Penuh</h3>
+        <p data-zh="通过 WhatsApp 实时指导，直到修好为止。">Panduan real-time via WhatsApp sampai mobil benar-benar selesai.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COVERAGE INDONESIA ===== -->
+<section class="alt">
+  <div class="container">
+    <div class="coverage">
+      <span class="tag-id" style="background:rgba(255,255,255,.12);color:#fff;margin-bottom:14px"><span data-zh="覆盖范围">Jangkauan</span></span>
+      <h2 data-zh="服务全印尼的修理厂">Melayani Bengkel di Seluruh Indonesia</h2>
+      <p data-zh="远程诊断通过网络进行——无论你在爪哇、苏门答腊、加里曼丹、苏拉威西还是巴厘岛，都能用。配件也发往全印尼。">Diagnosa dilakukan lewat internet — di mana pun Anda berada: Jawa, Sumatra, Kalimantan, Sulawesi, atau Bali. Suku cadang juga dikirim ke seluruh Indonesia.</p>
+      <div class="cities">
+        <span class="chip">Jakarta</span><span class="chip">Surabaya</span><span class="chip">Bandung</span>
+        <span class="chip">Medan</span><span class="chip">Semarang</span><span class="chip">Makassar</span>
+        <span class="chip">Denpasar</span><span class="chip">Palembang</span><span class="chip">Balikpapan</span>
+      </div>
+      <!-- abstract archipelago -->
+      <svg class="map" width="320" height="150" viewBox="0 0 320 150" fill="rgba(255,255,255,.18)">
+        <ellipse cx="60" cy="70" rx="46" ry="15"/><ellipse cx="130" cy="92" rx="30" ry="11"/>
+        <ellipse cx="120" cy="40" rx="22" ry="12"/><ellipse cx="195" cy="70" rx="20" ry="22"/>
+        <ellipse cx="240" cy="58" rx="26" ry="13"/><ellipse cx="285" cy="92" rx="16" ry="9"/>
+        <ellipse cx="170" cy="110" rx="10" ry="6"/><ellipse cx="220" cy="100" rx="8" ry="5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CASES ===== -->
+<section>
+  <div class="container">
+    <div class="section-head"><h2 data-zh="真实维修案例">Studi Kasus Nyata</h2></div>
+    <div class="grid grid-3">
+      <div class="case">
+        <div class="flag">🇮🇩 Jakarta</div>
+        <h4 data-zh="BYD Atto 3 — 丢钥匙、防盗锁死">BYD Atto 3 — kunci hilang, immobilizer aktif</h4>
+        <p data-zh="本地配钥匙店没有 BYD 工具，编不了新钥匙。">Tukang kunci lokal tidak punya alat BYD, kunci baru tidak bisa diprogram.</p>
+        <p data-zh="✅ 远程用 BYD 原厂设备，30 分钟编好新原厂钥匙。">✅ Remote pakai alat resmi BYD, kunci baru selesai diprogram dalam 30 menit.</p>
+        <span class="tag" data-zh="30 分钟">30 menit</span><span class="tag" data-zh="无需 OEM 工具">Tanpa alat OEM</span>
+      </div>
+      <div class="case">
+        <div class="flag">🇮🇩 Surabaya</div>
+        <h4 data-zh="Wuling Air EV — 多个故障码无法诊断">Wuling Air EV — banyak kode error tak terdiagnosa</h4>
+        <p data-zh="第三方扫描仪只显示通用码，定位不到问题。">Scanner pihak ketiga hanya tampilkan kode umum, masalah tak ketemu.</p>
+        <p data-zh="✅ 远程诊断锁定模块故障，指导更换、问题解决。">✅ Diagnosa remote temukan modul rusak, dipandu ganti — masalah beres.</p>
+        <span class="tag" data-zh="找到根因">Akar masalah</span><span class="tag" data-zh="指导维修">Dipandu</span>
+      </div>
+      <div class="case">
+        <div class="flag">🇮🇩 Bandung</div>
+        <h4 data-zh="Chery Omoda E5 — 事故后锁死无法启动">Chery Omoda E5 — terkunci & tak bisa start usai tabrakan</h4>
+        <p data-zh="碰撞后自动断电锁定，无法启动或移动。">Setelah benturan, sistem mati & terkunci, tak bisa start atau jalan.</p>
+        <p data-zh="✅ 中国工程师远程解锁并恢复上电，车辆成功启动。">✅ Teknisi di China buka kunci & pulihkan daya dari jauh — mobil hidup kembali.</p>
+        <span class="tag" data-zh="远程解锁">Buka kunci</span><span class="tag" data-zh="恢复供电">Daya pulih</span>
+      </div>
+    </div>
+    <p class="note center" data-zh="* 示例案例，用于说明服务类型。">* Contoh kasus untuk menggambarkan jenis layanan.</p>
+  </div>
+</section>
+
+<!-- ===== PARTS TEASER ===== -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-zh="需要中国电动车配件？">Butuh Suku Cadang Mobil Listrik China?</h2>
+      <p data-zh="发 OE 号或车型，24 小时内拿到报价。无最低起订量，发货全印尼。">Kirim OE number atau model, dapat penawaran dalam 24 jam. Tanpa minimum order, kirim ke seluruh Indonesia.</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8l9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><h3 data-zh="OE 号匹配">Cocok OE Number</h3><p data-zh="精确匹配，一次买对。">Dicocokkan tepat, beli benar sekali.</p></div>
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h3 data-zh="24 小时报价">Quote 24 Jam</h3><p data-zh="发来即报，急单加急。">Kirim, langsung di-quote.</p></div>
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7zM7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg></span><h3 data-zh="无 MOQ">Tanpa MOQ</h3><p data-zh="单件也接，发货全印尼。">Satuan pun bisa, kirim se-Indonesia.</p></div>
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><h3 data-zh="1 年质保">Garansi 1 Tahun</h3><p data-zh="OEM 与精选副厂件。">OEM & aftermarket pilihan.</p></div>
+    </div>
+    <div class="center" style="margin-top:28px"><a class="btn btn-primary btn-lg" href="suku-cadang.html" data-zh="查看配件供应">Lihat Suku Cadang</a></div>
+  </div>
+</section>
+
+<!-- ===== TRAINING TEASER ===== -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <h2 data-zh="想让你的团队会修中国电动车？">Mau Tim Anda Bisa Servis Mobil Listrik China?</h2>
+      <p data-zh="在线课程 + 中国广州实操培训，由工厂认证工程师授课，配印尼语翻译。">Kelas online + hands-on di Guangzhou, diajar teknisi pabrik dengan interpretasi Bahasa Indonesia.</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><h3 data-zh="高压安全">Keselamatan HV</h3><p data-zh="高压防护与绝缘检测。">Proteksi tegangan tinggi & uji isolasi.</p></div>
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a3.5 3.5 0 0 0-4.7 4.3L3 17.6 6.4 21l6.9-6.9a3.5 3.5 0 0 0 4.4-4.6l-2.4 2.4-2-2z"/></svg></span><h3 data-zh="真车实操">Praktik Mobil Nyata</h3><p data-zh="电池、电机、充电、空调压缩机。">Baterai, motor, charging, kompresor AC.</p></div>
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 8 21l4-2 4 2-1-7.5"/></svg></span><h3 data-zh="结业证书">Sertifikat</h3><p data-zh="完成颁发证书。">Sertifikat setelah selesai.</p></div>
+      <div class="card center"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 8.2a3 3 0 0 1 0 5.6M15.5 20a5.5 5.5 0 0 1 5 0"/></svg></span><h3 data-zh="课后支持群">Grup Alumni</h3><p data-zh="WhatsApp 技术支持群。">Grup dukungan teknis WhatsApp.</p></div>
+    </div>
+    <div class="center" style="margin-top:28px"><a class="btn btn-outline btn-lg" href="training.html" data-zh="了解培训">Lihat Training</a></div>
+  </div>
+</section>
+
+<!-- ===== PRICING TEASER ===== -->
+<section class="alt">
+  <div class="container">
+    <div class="cta-band">
+      <h2 data-zh="诊断 · 起价 Rp 1.800.000">Diagnosa · Mulai dari Rp 1.800.000</h2>
+      <p data-zh="按次付费，无订阅。不确定哪里坏？先做一次诊断，我们告诉你问题在哪、怎么修。">Bayar per kasus, tanpa langganan. Belum tahu masalahnya? Mulai dengan diagnosa — kami beri tahu masalah & cara perbaikinya.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="harga.html" data-zh="查看完整价格">Lihat Harga Lengkap</a>
+        <a class="btn btn-wa btn-lg js-wa" data-zh="WhatsApp 咨询">Chat WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LEAD FORM ===== -->
+<section id="form">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow light" data-zh="开始">Mulai</span>
+      <h2 data-zh="请求诊断 / 留下联系方式">Minta Diagnosa Sekarang</h2>
+      <p data-zh="填好资料（照片可传可不传），我们尽快用 WhatsApp 联系你。">Isi data Anda (foto opsional), kami segera menghubungi via WhatsApp.</p>
+    </div>
+    <div id="lead-form-mount"></div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="alt">
+  <div class="container" style="max-width:780px">
+    <div class="section-head"><h2 data-zh="常见问题">Pertanyaan Umum</h2></div>
+    <div class="faq">
+      <details><summary data-zh="我需要昂贵的 OEM 设备吗？">Apakah saya butuh alat OEM yang mahal?</summary>
+        <div class="ans" data-zh="不需要。你只要一台 Smartlink C 设备接上车，我们的工程师在中国用 OEM 设备完成诊断。不用买每个品牌 5000 美元的工具。">Tidak. Anda hanya perlu satu alat Smartlink C di mobil. Teknisi kami di China yang melakukan diagnosa dengan alat OEM. Tidak perlu beli tool merek seharga ribuan dolar.</div></details>
+      <details><summary data-zh="支持哪些品牌？">Merek apa saja yang didukung?</summary>
+        <div class="ans" data-zh="BYD、五菱、奇瑞、Jaecoo、Omoda、MG、吉利、哪吒、问界、埃安、DFSK 等 20+ 中国电动车/混动品牌，覆盖深度因车型年款而异。">BYD, Wuling, Chery, Jaecoo, Omoda, MG, Geely, Neta, AITO, Aion, DFSK dan 20+ merek lain. Kedalaman dukungan tergantung model & tahun.</div></details>
+      <details><summary data-zh="这样对我的车安全吗？">Apakah aman untuk mobil saya?</summary>
+        <div class="ans" data-zh="安全。所有远程连接端到端加密，未经你确认不会对车辆做永久更改，全程合规、不破解。">Aman. Semua koneksi terenkripsi end-to-end, tidak ada perubahan permanen tanpa konfirmasi Anda. Sepenuhnya legal, tanpa jailbreak.</div></details>
+      <details><summary data-zh="多久能得到支持？">Berapa cepat saya bisa dibantu?</summary>
+        <div class="ans" data-zh="WhatsApp 联系后通常几小时内回复，诊断通常 1–2 个工作日内安排，紧急情况可加急。">Setelah hubungi via WhatsApp, biasanya kami balas dalam beberapa jam. Sesi diagnosa umumnya dijadwalkan 1–2 hari kerja. Kasus darurat bisa dipercepat.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:12px"><img class="logo" src="icon.svg" alt="EV China Indonesia"><span style="color:#fff">EV China Indonesia</span></div>
+        <p style="color:#9FB4CA;font-size:14px;max-width:300px" data-zh="为印尼修理厂提供中国电动车远程诊断、配件与培训。">Diagnosa jarak jauh, suku cadang & training mobil listrik China untuk bengkel di Indonesia.</p>
+      </div>
+      <div>
+        <h4 data-zh="快速链接">Tautan</h4>
+        <a href="diagnosa.html" data-zh="远程诊断">Diagnosa</a>
+        <a href="suku-cadang.html" data-zh="配件">Suku Cadang</a>
+        <a href="training.html" data-zh="培训">Training</a>
+        <a href="harga.html" data-zh="价格">Harga</a>
+        <a href="tentang-kami.html" data-zh="关于我们">Tentang Kami</a>
+        <a href="kontak.html" data-zh="联系">Kontak</a>
+      </div>
+      <div>
+        <h4 data-zh="联系方式">Kontak</h4>
+        <a class="js-wa">WhatsApp</a>
+        <a href="mailto:info@evchina.id">info@evchina.id</a>
+        <div class="pay-pills" style="margin-top:10px">
+          <span data-zh="（二期）线上支付：">Pembayaran (fase 2):</span>
+          <span>QRIS</span><span>GoPay</span><span>OVO</span><span>Transfer</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 EV China Indonesia · evchina.id</div>
+  </div>
+</footer>
+
+<a class="wa-float js-wa" data-wa-text="Halo, saya butuh bantuan diagnosa mobil listrik China."><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.7-1.2-4.5-4-4.6-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.3 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.3.1.4.2.5.3.1.3.1.7-.1 1.2z"/></svg> <span data-zh="联系客服">WhatsApp</span></a>
+
+<script src="app.js"></script>
+<script src="lead-form.js"></script>
+</body>
+</html>

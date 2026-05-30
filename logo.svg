@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 120" role="img" aria-label="EV China Indonesia">
+  <g font-family="Poppins, 'Arial Black', Arial, sans-serif" font-weight="800">
+    <text x="2" y="66" font-size="62" letter-spacing="-2" fill="#0B1F33">EV</text>
+    <path d="M104 16 L92 44 L101 44 L95 66 L118 34 L107 34 L115 16 Z" fill="#61D836"/>
+    <text x="126" y="66" font-size="62" letter-spacing="-1" fill="#0B1F33">CHINA</text>
+  </g>
+  <text x="160" y="91" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="19" letter-spacing="7" fill="#61D836">INDONESIA</text>
+  <text x="160" y="112" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="12" letter-spacing="1.4" fill="#0B1F33">DIAGNOSA &#8226; SUKU CADANG &#8226; TRAINING</text>
+</svg>
