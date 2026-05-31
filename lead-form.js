@@ -1,29 +1,50 @@
 /* ============================================================
    EV China Indonesia — 留资表单（独立维护文件）
    ------------------------------------------------------------
-   一张干净的品牌表单，客户可【自行选择是否上传照片/视频】，无需登录。
-   提交后线索 + 照片进你的 Forminit 后台。
-   ------------------------------------------------------------
-   提交方式：表单【原生 POST + 隐藏 iframe】，不走 AJAX —— 避免跨域(CORS)被拦。
-   提交成功后由 iframe 加载完成触发，跳转到“谢谢”页。
-   ============================================================
-   ★ 换表单只需改 FORM_CONFIG.endpoint（Forminit 的提交地址）。
+   提交直接进你自己的 Supabase：
+     · 线索文字 → Postgres 表 leads
+     · 照片     → Storage 桶 lead-photos
+   浏览器直连 Supabase（用 publishable key，受 RLS 保护，安全）。
    ============================================================ */
+
+const SB_URL = "https://lodzuuxgpansscpfgtcf.supabase.co";
+const SB_KEY = "sb_publishable_Xg7qubOA7_k5fP_yV5uRHQ_Si2R1LC8";
+const SB_BUCKET = "lead-photos";
 
 const FORM_CONFIG = {
-  endpoint: "https://forminit.com/f/5auc8ubx42f",   // 你的 Forminit 提交地址
   successRedirect: "terima-kasih.html",
-  maxFileMB: 25                                       // 单文件上限提示（Forminit 免费版 25MB）
+  maxTotalMB: 25      // 照片总大小上限；超了不上传，提示走 WhatsApp
 };
 
-/* ============================================================
-   以下逻辑一般无需改动
-   ============================================================ */
+let _sb = null;
+
+/* 动态加载 supabase-js（UMD）并初始化客户端 */
+function ensureSupabase(){
+  return new Promise((resolve, reject)=>{
+    if(_sb){ resolve(_sb); return; }
+    const init = ()=>{
+      try{ _sb = window.supabase.createClient(SB_URL, SB_KEY); resolve(_sb); }
+      catch(e){ reject(e); }
+    };
+    if(window.supabase && window.supabase.createClient){ init(); return; }
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+    s.onload = init;
+    s.onerror = ()=> reject(new Error("supabase load failed"));
+    document.head.appendChild(s);
+  });
+}
+
+function uuid(){
+  if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{
+    const r=Math.random()*16|0, v=c==="x"?r:(r&0x3|0x8); return v.toString(16);
+  });
+}
+
 function leadFormHTML(){
   return `
-  <form class="form-card" id="leadForm"
-        action="${FORM_CONFIG.endpoint}" method="POST"
-        enctype="multipart/form-data" target="evchina_hidden_iframe">
+  <form class="form-card" id="leadForm" novalidate>
     <h3 style="margin-bottom:6px" data-zh="留下信息，我们主动联系你">Tinggalkan Data, Kami yang Menghubungi Anda</h3>
     <p class="note" style="margin-bottom:18px" data-zh="只需 30 秒。照片可传可不传——传了诊断更准。">Cukup 30 detik. Foto opsional — kalau ada, diagnosa lebih akurat.</p>
     <div class="form-row">
@@ -52,9 +73,8 @@ function leadFormHTML(){
       <p class="note" style="margin-top:6px" data-zh="选填。文件太大（>25MB）建议改用 WhatsApp 发。">Opsional. File besar (>25MB) lebih baik dikirim via WhatsApp.</p>
     </div>
     <button type="submit" class="btn btn-wa" data-zh="提交">Kirim Sekarang</button>
-    <p class="note" style="text-align:center;margin-top:12px" data-zh="提交后我们会尽快用 WhatsApp 联系你。">Setelah dikirim, kami akan segera menghubungi via WhatsApp.</p>
+    <p class="note" id="formMsg" style="text-align:center;margin-top:12px" data-zh="提交后我们会尽快用 WhatsApp 联系你。">Setelah dikirim, kami akan segera menghubungi via WhatsApp.</p>
   </form>
-  <iframe name="evchina_hidden_iframe" id="evchina_hidden_iframe" style="display:none" title="submit"></iframe>
   `;
 }
 
@@ -63,35 +83,60 @@ function initLeadForm(){
   if(!mounts.length) return;
   mounts.forEach(m => { m.innerHTML = leadFormHTML(); });
   if(window.EVChina){ window.EVChina.refreshI18n(); window.EVChina.wireWhatsApp(); }
+  ensureSupabase().catch(()=>{});   // 预加载
 
   const form = document.getElementById("leadForm");
   if(!form) return;
   const btn = form.querySelector('button[type="submit"]');
-  const btnOrig = btn ? btn.textContent : "";
-  const iframe = document.getElementById("evchina_hidden_iframe");
-  let submitted = false;
+  const btnOrig = btn ? btn.textContent : "Kirim";
+  const g = (n)=> (form.querySelector(`[name="${n}"]`)?.value || "").trim();
 
-  form.addEventListener("submit", ()=>{
-    // 文件过大保护：>25MB 的照片/视频清掉不上传（Forminit 免费版上限），文字照常提交
-    const fileInput = form.querySelector('input[type="file"]');
-    if(fileInput && fileInput.files && fileInput.files.length){
-      let total = 0;
-      for(let i=0;i<fileInput.files.length;i++){ total += fileInput.files[i].size; }
-      if(total > (FORM_CONFIG.maxFileMB) * 1024 * 1024){
-        fileInput.value = "";  // 清掉大文件，避免上传失败/卡死
-        alert("Foto/video terlalu besar (lebih dari " + FORM_CONFIG.maxFileMB + "MB), jadi tidak ikut terkirim. Data Anda tetap kami terima — mohon kirim foto/video-nya via WhatsApp ya. 🙏");
-      }
-    }
-    submitted = true;
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
     if(btn){ btn.disabled = true; btn.textContent = "..."; }
-    // 不 preventDefault：让表单原生 POST 到隐藏 iframe（绕过 CORS）
-  });
 
-  if(iframe){
-    iframe.addEventListener("load", ()=>{
-      if(submitted){ window.location.href = FORM_CONFIG.successRedirect; }
-    });
-  }
+    try{
+      const sb = await ensureSupabase();
+      const id = uuid();
+
+      // 照片：大小检查 + 上传
+      const fileInput = form.querySelector('input[type="file"]');
+      const files = fileInput && fileInput.files ? Array.from(fileInput.files) : [];
+      let total = 0; files.forEach(f=> total += f.size);
+      const photoPaths = [];
+      if(files.length && total > FORM_CONFIG.maxTotalMB * 1024 * 1024){
+        alert("Foto/video terlalu besar (lebih dari " + FORM_CONFIG.maxTotalMB + "MB) jadi tidak ikut terkirim. Data Anda tetap kami terima — mohon kirim foto/video-nya via WhatsApp ya. 🙏");
+      } else {
+        for(const f of files){
+          const safe = (f.name || "file").replace(/[^a-zA-Z0-9._-]/g, "_");
+          const path = `${id}/${Date.now()}_${safe}`;
+          const up = await sb.storage.from(SB_BUCKET).upload(path, f, { upsert:false });
+          if(!up.error) photoPaths.push(path);
+        }
+      }
+
+      // 写入线索
+      const source = new URLSearchParams(location.search).get("utm_source") || document.referrer || "";
+      const { error } = await sb.from("leads").insert({
+        id,
+        nama: g("nama"),
+        whatsapp: g("whatsapp"),
+        kota: g("kota"),
+        brand_model: g("mobil"),
+        problem: g("masalah"),
+        photo_paths: photoPaths,
+        source: source.slice(0, 300)
+      });
+      if(error) throw error;
+
+      window.location.href = FORM_CONFIG.successRedirect;
+    }catch(err){
+      if(btn){ btn.disabled = false; btn.textContent = btnOrig; }
+      alert("Maaf, pengiriman gagal. Silakan coba lagi, atau hubungi kami langsung lewat tombol WhatsApp. 🙏");
+      console.error("lead submit error:", err);
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", initLeadForm);
