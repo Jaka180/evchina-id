@@ -53,7 +53,11 @@ function leadFormHTML(){
     </div>
     <div class="form-row">
       <label data-zh="WhatsApp 号码">Nomor WhatsApp</label>
-      <input name="whatsapp" required placeholder="08xxxxxxxxxx" data-zh-ph="您的 WhatsApp 号">
+      <div class="phone-wrap">
+        <span class="phone-prefix">🇮🇩 +62</span>
+        <input name="whatsapp" type="tel" inputmode="numeric" required placeholder="812 3456 789" data-zh-ph="不带开头的 0，如 812…">
+      </div>
+      <p class="note" style="margin-top:5px" data-zh="不用填开头的 0（例：0812… → 填 812…）">Tanpa angka 0 di depan (contoh: 0812… → tulis 812…)</p>
     </div>
     <div class="form-row">
       <label data-zh="城市">Kota</label>
@@ -118,10 +122,16 @@ function initLeadForm(){
 
       // 写入线索
       const source = new URLSearchParams(location.search).get("utm_source") || document.referrer || "";
+      // 规范 WhatsApp 为国际格式 62xxxx（前缀已是 +62，去掉用户多打的 0/62）
+      let waD = g("whatsapp").replace(/\D/g, "");
+      if(waD.startsWith("0"))  waD = waD.slice(1);
+      if(waD.startsWith("62")) waD = waD.slice(2);
+      const waFull = waD ? "62" + waD : "";
+
       const { error } = await sb.from("leads").insert({
         id,
         nama: g("nama"),
-        whatsapp: g("whatsapp"),
+        whatsapp: waFull,
         kota: g("kota"),
         brand_model: g("mobil"),
         problem: g("masalah"),

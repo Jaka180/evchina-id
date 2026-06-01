@@ -96,7 +96,14 @@ const STATUS = {
 
 const $ = (id)=>document.getElementById(id);
 function esc(s){ return (s||"").toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function digits(s){ return (s||"").replace(/[^0-9]/g,""); }
+function digits(s){
+  // 规范成印尼国际格式给 wa.me 用：0812...→62812... / 8xx...→628xx... / +62/62 保持
+  let d=(s||"").replace(/[^0-9]/g,"");
+  if(d.startsWith("62")) return d;
+  if(d.startsWith("0"))  return "62"+d.slice(1);
+  if(d.startsWith("8"))  return "62"+d;
+  return d;
+}
 
 async function refreshAuthUI(){
   const { data:{ session } } = await sb.auth.getSession();
