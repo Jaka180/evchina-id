@@ -73,7 +73,11 @@ function leadFormHTML(){
     </div>
     <div class="form-row">
       <label data-zh="故障照片/视频（选填，可多选）">Foto/Video Kerusakan (opsional, boleh beberapa)</label>
-      <input type="file" name="foto" accept="image/*,video/*" multiple>
+      <label class="file-btn">
+        <input type="file" name="foto" accept="image/*,video/*" multiple style="display:none">
+        <span data-zh="📎 选择照片/视频">📎 Pilih Foto/Video</span>
+      </label>
+      <span class="file-names" id="fileNames" data-zh="未选择文件">Belum ada file dipilih</span>
       <p class="note" style="margin-top:6px" data-zh="选填。文件太大（>25MB）建议改用 WhatsApp 发。">Opsional. File besar (>25MB) lebih baik dikirim via WhatsApp.</p>
     </div>
     <button type="submit" class="btn btn-wa" data-zh="提交">Kirim Sekarang</button>
@@ -94,6 +98,18 @@ function initLeadForm(){
   const btn = form.querySelector('button[type="submit"]');
   const btnOrig = btn ? btn.textContent : "Kirim";
   const g = (n)=> (form.querySelector(`[name="${n}"]`)?.value || "").trim();
+
+  // 选好文件后，显示文件名（自定义按钮）
+  const fileInput = form.querySelector('input[type="file"]');
+  const fileNames = form.querySelector('#fileNames');
+  if(fileInput && fileNames){
+    fileInput.addEventListener("change", ()=>{
+      const fs = fileInput.files;
+      if(!fs || !fs.length){ fileNames.textContent = "Belum ada file dipilih"; }
+      else if(fs.length === 1){ fileNames.textContent = "✅ " + fs[0].name; }
+      else { fileNames.textContent = "✅ " + fs.length + " file dipilih"; }
+    });
+  }
 
   form.addEventListener("submit", async (e)=>{
     e.preventDefault();

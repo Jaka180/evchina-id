@@ -267,6 +267,11 @@ td.price{font-weight:700;color:var(--accent-d);white-space:nowrap}
 /* 上线：默认隐藏开发用元素（演示条 + 中文切换）；预览时在网址加 ?dev=1 即可显示 */
 .dev-banner,.lang-toggle{display:none}
 
+/* 自定义文件选择按钮（避免浏览器原生中文/丑按钮） */
+.file-btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:#fff;border:1.5px dashed var(--line);border-radius:10px;padding:12px 18px;font-weight:600;color:var(--ink);font-size:14px}
+.file-btn:hover{border-color:var(--accent);color:var(--accent-d)}
+.file-names{display:block;margin-top:8px;font-size:13px;color:var(--muted)}
+
 /* 电话输入：固定 +62 前缀 */
 .phone-wrap{display:flex;align-items:stretch}
 .phone-prefix{display:flex;align-items:center;gap:6px;padding:0 14px;background:#EEF2F7;border:1.5px solid var(--line);border-right:none;border-radius:10px 0 0 10px;font-weight:600;color:var(--ink);font-size:15px;white-space:nowrap}
